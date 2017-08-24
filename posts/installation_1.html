@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dewi Multi-purpose theme</title>
+
+    <!-- Bootstrap -->
+    <link href="./../css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./../css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./../css/isotope.css" media="screen" />	
+	<link rel="stylesheet" href="./../css/animate.css">
+	<link rel="stylesheet" href="./../js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+	<link href="./../css/style.css" rel="stylesheet">	
+    <!-- =======================================================
+        Theme Name: Dewi
+        Theme URL: https://bootstrapmade.com/dewi-free-multi-purpose-html-template/
+        Author: BootstrapMade
+        Author URL: https://bootstrapmade.com
+    ======================================================= -->
+  </head>
+  <body>
+	<header>
+		<nav div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container">
+				<ul class="social-network">
+					<li><a href="#" data-placement="top" title="Facebook"><i class="fa fa-facebook fa-1x"></i></a></li>
+					<li><a href="#" data-placement="top" title="Twitter"><i class="fa fa-twitter fa-1x"></i></a></li>
+					<li><a href="#" data-placement="top" title="Linkedin"><i class="fa fa-linkedin fa-1x"></i></a></li>
+					<li><a href="#" data-placement="top" title="Pinterest"><i class="fa fa-pinterest fa-1x"></i></a></li>
+					<li><a href="#" data-placement="top" title="Google plus"><i class="fa fa-google-plus fa-1x"></i></a></li>
+				</ul>
+				<ul class="info">
+					<li><p><i class="fa fa-phone"></i>+1 769 525 422 5663</p></li>
+					<li><a href="#"><i class="fa fa-envelope"></i>hello@Dewi.com</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="navigation">
+				<div class="container">					
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<div class="navbar-brand">
+							<a href="index.html"><h1><span>D</span>ewi</h1></a>
+						</div>
+					</div>
+					
+					<div class="navbar-collapse collapse">							
+						<div class="menu">
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation"><a href="./../index.html">Home</a></li>
+								<li role="presentation"><a href="./../services.html">Documentation</a></li>
+								<li role="presentation"><a href="./../blog.html" class="active">Blog</a></li>
+								<li role="presentation"><a href="./../portfolio.html">Portfolio</a></li>
+								<li role="presentation"><a href="./../contact.html">Contact</a></li>						
+							</ul>
+						</div>
+					</div>						
+				</div>
+			</div>	
+		</nav>		
+	</header>
+    
+	<!-- <div class="jumbotron">
+		<h2>Efficient Selection of DOM Elements for Data Extraction</h2>		
+	</div> -->
+    
+	<div class="blog">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-8">
+					<div class="page-header">
+						<h3>Efficient Selection of DOM Elements for Data Extraction</h3>
+						<h5>August 24, 2017 - Posted by Penn Wu</h5>
+            <img src="img/slider/5.jpg" class="img-responsive"alt="" />								
+            <img src="img/blog/dom_manipulation.jpeg" alt="" />
+						<p>The traditional March Madness bracket pool system lacks interaction or direct head-to-head competition. So for March Madness this year, we used a Calcutta Auction to auction individual teams to players and distribute winnings from the pool based on how well each team did. Each matchup was exciting and personal between the owners of the teams competing. It was a hit.
+						</p>
+
+						<p>Another option to get programmatic access to the data was to create our own server, which would scrape game results from a sports site and serve it up as an API that the sheet could access. We would have to set up infrastructure, build server-side routing and develop a tested, reliable algorithm for data extraction. There are a lot of resources out there now that help make this process easier. NodeJS has libraries that abstract away the scraping algorithms, but the infrastructure and creation of the scrape definitions is still on you. Open source tools give you an interface for setting up scrapes, but are run once and actively by the user. Commercial software provide end-to-end solutions, but you’re limited to how/when the vendor provides data — plus it costs money.
+            </p>
+
+						<p>So we built our own server.</p>
+          
+            <h3>Least-Most Specific (LMS) Algorithm</h3>
+
+            <p>
+              Finding reliable CSS Selectors for the HTML elements you want to scrape is critical to obtaining good data. During implementation of our web scraping server, we went through many iterations of our element selection algorithm to accurately pinpoint the elements we selected.
+              
+            </p>
+            <p>
+              While it’s easy to identify elements by their ID or class list, many elements lack an id, or share classes with other elements on the DOM. In addition, popular websites like Reddit modify their HTML with ids and pseudo-id classes to prevent scraping.
+            </p>
+            <p>
+              To make your scraper versatile, it’s best to use a combination of element tags and nth-child positions to consistently grab elements. Luckily, you won’t have to do this from scratch! In the following example, we will walk through the Least-Most Specific Algorithm, a performant CSS selector algorithm for identifying elements on webpages.
+            </p>
+            <h3>Scraping from Reddit</h3>
+            <p>
+              Let’s say you are looking to build a web scraper for Reddit. To be specific, you are looking to get titles of all posts on the Reddit Homepage. Your initial thought is to use the id and classes to grab the titles.
+            </p>
+            <p>
+              That is until you run into ids like thing_t3_6uc76y that Reddit is using to prevent you from extracting titles on their website.
+            </p>
+            <p>
+              Your next idea is to get the entire DOM Path of the element.
+            </p>
+            <img src="./../img/blog/installation_1/entire-dom-path.png" alt=""/>
+            <p>
+              The problem with extracting the entire DOM Path are redundant elements, such as html and body elements. In most scenarios, only a fraction of the DOM Path is needed to find the unique element.
+            </p>
+            <p>
+              Instead of traversing down from HTML, we can traverse up the DOM Path from the current element. Before traversing up the respective parent, we check to see if the relative path results in a unique element.
+            </p>
+            <p>
+              This approach results in the least specific selectors needed to get our post. Compared to the entire DOM Path shown above, we reduce traversing by 7 iterations.
+            </p>
+            <img src="./../img/blog/installation_1/least-specific.png" alt=""/>
+            <img src="./../img/blog/installation_1/least-specific-result.png" alt=""/>
+            <p>
+              But wait, that’s not it! We can use this same path to get the most selectors needed to get all related elements of the our selection. This is done by removing the last traversal.
+            </p>
+            <img src="./../img/blog/installation_1/most-specific.png" alt=""/>
+            <img src="./../img/blog/installation_1/most-specific-result.png" alt=""/>
+            <p>
+              By creating an algorithm that traverses the DOM from the child to html, we build a performant algorithm that reduces the number of traversals needed to get CSS selectors for our selected element and related elements.
+            </p>
+            <p>
+              In addition, we avoid the pain of dealing with websites that add layers of ids and pseudo-id classes to prevent web scraping.
+            </p>
+            <h3>LiveAPI</h3>
+            <p>
+              Data extraction is complicated and labor intensive process with a high developer barrier. While some paid solutions tackle the challenge of simplifying data extraction and service of data; for anyone who doesn’t have the money to spend on expensive API access or the time and technical skill to extract data manually, there are not many existing free, open source alternatives.
+            </p>
+            <p>
+              To solve this, we built LiveAPI, a simple, end-to-end, open-source data extraction solution. With a short bash command and a few clicks you can serve your own APIs locally or on an AWS server. To get started, set up the server, install the Chrome Extension, browse to a website and design your own JSON data to serve. Teams can even configure their server(s) with multiple users that have authorization to design endpoints. Nested detail scraping and pagination navigation is coming soon to the intuitive UI that guides users through the endpoint creation process directly, and unintrusively, on the target URL page.
+            </p>
+            <p>
+              We’re Brett Beekley, Melissa Schwartz and Penn Wu. For more information on LiveAPI please check us out on Github. We appreciate your suggestions, issues and pull requests.
+            </p>
+
+
+
+						<!-- <div class="ficon">
+							<a href="./posts/installation_1.html" alt="installation part 1">Read more</a> 
+						</div>	 -->
+					</div>	
+					
+					<!-- <nav>
+						<ul class="pager">
+							<li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+							<li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+						</ul>
+					</nav> -->
+					
+				</div>
+				
+				<!-- <div class="recents">
+					<div class="col-xs-6 col-md-4">
+						<h5>Search for.</h5>
+						<form class="form-search">
+							<input class="form-control" type="text" placeholder="Search..">
+						</form>
+						<div class="page-header">
+							<h4>Recent Posts</h4>
+						</div>
+						<div class="recent-post">
+							<ul class="recent">
+								<li><a href="#">Selection of DOM Elements for Data Extraction</a></li>
+							</ul>
+						</div>
+						<ul class="list-group">
+							<div class="page-header">
+								<h4>Categories</h4>
+							</div>
+							
+							<li class="list-group-item">
+								<span class="badge">1</span>
+									<a href="#" alt="">Data Extraction</a>
+							</li>
+							</li>
+						</ul>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<footer>
+		<div class="inner-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 f-about">
+						<a href="index.html"><h1><span>D</span>ewi</h1></a>
+						<p>We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind contains such power.</p>
+						
+					</div>
+					<div class="col-md-4 l-posts">
+						<h3 class="widgetheading">Latest Posts</h3>
+						<ul>
+							<li><a href="#">This is awesome post title</a></li>
+							<li><a href="#">Awesome features are awesome</a></li>
+							<li><a href="#">Create your own awesome website</a></li>
+							<li><a href="#">Wow, this is fourth post title</a></li>
+						</ul>
+					</div>
+					<div class="col-md-4 f-contact">
+						<h3 class="widgetheading">Stay in touch</h3>
+						<a href="#"><p><i class="fa fa-envelope"></i> example@gmail.com</p></a>
+						<p><i class="fa fa-phone"></i>  +345 578 59 45 416</p>
+						<p><i class="fa fa-home"></i> Dewi inc  |  PO Box 23456 
+							Little Lonsdale St, New York <br>
+							Victoria 8011 USA</p>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="last-div">
+			<div class="container">
+				<div class="row">
+					<div class="copyright">
+						&copy; Dewi Theme. All Rights Reserved
+                        <div class="credits">
+                            <!-- 
+                                All the links in the footer should remain intact. 
+                                You can delete the links only if you purchased the pro version.
+                                Licensing information: https://bootstrapmade.com/license/
+                                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Dewi
+                            -->
+                            <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>
+					</div>
+					<nav class="foot-nav">
+						<ul>
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Services</a></li>
+							<li><a href="#">Blog</a></li>
+							<li><a href="#">Portfolio</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</nav>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<a href="" class="scrollup"><i class="fa fa-chevron-up"></i></a>	
+		</div>
+	</footer>
+   
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/fancybox/jquery.fancybox.pack.js"></script>
+	<script src="js/jquery.bxslider.min.js"></script>
+	<script src="js/functions.js"></script>
+	<script>wow = new WOW({}).init();</script>
+    
+</body>
+</html>

@@ -77,19 +77,76 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-8">
 					<div class="page-header">
-						<h3>Using LiveAPI Part 1: Installation</h3>
+						<h3>Efficient Selection of DOM Elements for Data Extraction</h3>
 						<h5>August 24, 2017 - Posted by Penn Wu</h5>
 						<img src="img/slider/5.jpg" class="img-responsive"alt="" />								
-						<p>Successful apps are built on data. As developers, we don’t always have access to the data that would help make our app successful. While the internet is a nearly-bottomless source of public data in the form of websites, that data is not always structured or available programmatically through an API. Time spent building an extraction algorithm and server is time not spent building your app.
+            
+						<p>The traditional March Madness bracket pool system lacks interaction or direct head-to-head competition. So for March Madness this year, we used a Calcutta Auction to auction individual teams to players and distribute winnings from the pool based on how well each team did. Each matchup was exciting and personal between the owners of the teams competing. It was a hit.
 						</p>
-						<p>We’re developing LiveAPI, a developer tool to turn any website’s public data into an API in a few minutes. LiveAPI has two parts: a Chrome Extension to select data to extract and a user-hostable server that extracts data and serves up the user-created API endpoints.
-						</p>
-						<p>This is the first in a three-part guide that walks through how to get started and use LiveAPI.
-              <br>Part 1: Installation
-              <br>Part 2: Authentication
-              <br>Part 3: Using the Chrome Extension</p>	
+
+						<p>Another option to get programmatic access to the data was to create our own server, which would scrape game results from a sports site and serve it up as an API that the sheet could access. We would have to set up infrastructure, build server-side routing and develop a tested, reliable algorithm for data extraction. There are a lot of resources out there now that help make this process easier. NodeJS has libraries that abstract away the scraping algorithms, but the infrastructure and creation of the scrape definitions is still on you. Open source tools give you an interface for setting up scrapes, but are run once and actively by the user. Commercial software provide end-to-end solutions, but you’re limited to how/when the vendor provides data — plus it costs money.
+            </p>
+
+						<p>So we built our own server.</p>
+          
+            <h3>Least-Most Specific (LMS) Algorithm</h3>
+
+            <p>
+              Finding reliable CSS Selectors for the HTML elements you want to scrape is critical to obtaining good data. During implementation of our web scraping server, we went through many iterations of our element selection algorithm to accurately pinpoint the elements we selected.
+              
+            </p>
+            <p>
+              While it’s easy to identify elements by their ID or class list, many elements lack an id, or share classes with other elements on the DOM. In addition, popular websites like Reddit modify their HTML with ids and pseudo-id classes to prevent scraping.
+            </p>
+            <p>
+              To make your scraper versatile, it’s best to use a combination of element tags and nth-child positions to consistently grab elements. Luckily, you won’t have to do this from scratch! In the following example, we will walk through the Least-Most Specific Algorithm, a performant CSS selector algorithm for identifying elements on webpages.
+            </p>
+            <h3>Scraping from Reddit</h3>
+            <p>
+              Let’s say you are looking to build a web scraper for Reddit. To be specific, you are looking to get titles of all posts on the Reddit Homepage. Your initial thought is to use the id and classes to grab the titles.
+            </p>
+            <p>
+              That is until you run into ids like thing_t3_6uc76y that Reddit is using to prevent you from extracting titles on their website.
+            </p>
+            <p>
+              Your next idea is to get the entire DOM Path of the element.
+            </p>
+            <img src="./../img/blog/installation_1/entire-dom-path.png" alt=""/>
+            <p>
+              The problem with extracting the entire DOM Path are redundant elements, such as html and body elements. In most scenarios, only a fraction of the DOM Path is needed to find the unique element.
+            </p>
+            <p>
+              Instead of traversing down from HTML, we can traverse up the DOM Path from the current element. Before traversing up the respective parent, we check to see if the relative path results in a unique element.
+            </p>
+            <p>
+              This approach results in the least specific selectors needed to get our post. Compared to the entire DOM Path shown above, we reduce traversing by 7 iterations.
+            </p>
+            <img src="./../img/blog/installation_1/least-specific.png" alt=""/>
+            <img src="./../img/blog/installation_1/least-specific-result.png" alt=""/>
+            <p>
+              But wait, that’s not it! We can use this same path to get the most selectors needed to get all related elements of the our selection. This is done by removing the last traversal.
+            </p>
+            <img src="./../img/blog/installation_1/most-specific.png" alt=""/>
+            <img src="./../img/blog/installation_1/most-specific-result.png" alt=""/>
+            <p>
+              By creating an algorithm that traverses the DOM from the child to html, we build a performant algorithm that reduces the number of traversals needed to get CSS selectors for our selected element and related elements.
+            </p>
+            <p>
+              In addition, we avoid the pain of dealing with websites that add layers of ids and pseudo-id classes to prevent web scraping.
+            </p>
+            <h3>LiveAPI</h3>
+            <p>
+              Data extraction is complicated and labor intensive process with a high developer barrier. While some paid solutions tackle the challenge of simplifying data extraction and service of data; for anyone who doesn’t have the money to spend on expensive API access or the time and technical skill to extract data manually, there are not many existing free, open source alternatives.
+            </p>
+            <p>
+              To solve this, we built LiveAPI, a simple, end-to-end, open-source data extraction solution. With a short bash command and a few clicks you can serve your own APIs locally or on an AWS server. To get started, set up the server, install the Chrome Extension, browse to a website and design your own JSON data to serve. Teams can even configure their server(s) with multiple users that have authorization to design endpoints. Nested detail scraping and pagination navigation is coming soon to the intuitive UI that guides users through the endpoint creation process directly, and unintrusively, on the target URL page.
+            </p>
+            <p>
+              We’re Brett Beekley, Melissa Schwartz and Penn Wu. For more information on LiveAPI please check us out on Github. We appreciate your suggestions, issues and pull requests.
+            </p>
+
 						<div class="ficon">
-							<a href="./posts/installation_1.html" alt="installation part 1">Read more</a> 
+							<a href="./posts/blog1.html" alt="blog1">Read more</a> 
 						</div>	
 					</div>	
 					
@@ -132,32 +189,38 @@
 			</div>
 		</div>
 	</div>
+	<div class="jumbotron">
+		<h1>Because data should be<span> open and free.</span> </h1>
+		<p>LiveAPI is and always will be open source. We welcome contributions from other developers.</p>
+		<p><a class="btn btn-primary btn-lg" href="https://github.com/Live-API" role="button">Go to Github</a></p>
+	</div>
 	
 	<footer>
 		<div class="inner-footer">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-4 f-about">
-						<a href="index.html"><h1><span>D</span>ewi</h1></a>
-						<p>We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind contains such power.</p>
+						<a href="index.html"><h1>Live<span>API</span></h1></a>
+						<p>LiveAPI offers elegant, extensible and easy to use data extraction with the touch of a button (or rather, a short bash command). Serve your own APIs locally or on an AWS server; simply set up the server, the corresponding LiveAPI Chrome Extension and painlessly design your own JSON data to serve. </p>
 						
 					</div>
 					<div class="col-md-4 l-posts">
 						<h3 class="widgetheading">Latest Posts</h3>
 						<ul>
-							<li><a href="#">This is awesome post title</a></li>
-							<li><a href="#">Awesome features are awesome</a></li>
-							<li><a href="#">Create your own awesome website</a></li>
-							<li><a href="#">Wow, this is fourth post title</a></li>
+							<li><a href="documentation.html">Get started</a></li>
+							<li><a href="blog.html">Data Extraction Challenges in the Modern Web</a></li>
+							<li><a href="index.html">About the Team</a></li>
+							<li><a href="index.html">Links</a></li>
 						</ul>
 					</div>
 					<div class="col-md-4 f-contact">
 						<h3 class="widgetheading">Stay in touch</h3>
-						<a href="#"><p><i class="fa fa-envelope"></i> example@gmail.com</p></a>
-						<p><i class="fa fa-phone"></i>  +345 578 59 45 416</p>
-						<p><i class="fa fa-home"></i> Dewi inc  |  PO Box 23456 
-							Little Lonsdale St, New York <br>
-							Victoria 8011 USA</p>
+						<a href="#"><p><i class="fa fa-envelope"></i> info@liveapi.xyz</p></a>
+						<!-- <p><i class="fa fa-phone"></i>  (000) 524-5453</p> -->
+						<p><i class="fa fa-home"></i> LiveAPI Limited<br>
+							5300 Beethoven Street<br> 
+							PH Floor (4th), Los Angeles <br>
+							California 90025 USA</p>
 					</div>
 				</div>
 			</div>
@@ -178,30 +241,30 @@
                             <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a> by <a href="https://bootstrapmade.com/">BootstrapMade</a>
                         </div>
 					</div>
-					<nav class="foot-nav">						
+					<nav class="foot-nav">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Documentation</a></li>
-							<li><a href="#">Blog</a></li>
-							<li><a href="#">Screencasts</a></li>
-							<li><a href="#">Contact</a></li>
-						</ul>						
+							<li><a href="index.html">Home</a></li>
+							<li><a href="documentation.html">Documentation</a></li>
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="screencasts.html">Screencasts</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
 					</nav>
 					<div class="clear"></div>
 				</div>
 			</div>
 			<a href="" class="scrollup"><i class="fa fa-chevron-up"></i></a>	
-		</div>
+		</div>		
 	</footer>
    
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-2.1.1.min.js"></script>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->	
+    <script src="js/jquery-2.1.1.min.js"></script>	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/wow.min.js"></script>
 	<script src="js/fancybox/jquery.fancybox.pack.js"></script>
-	<script src="js/jquery.isotope.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
 	<script src="js/jquery.bxslider.min.js"></script>
 	<script src="js/functions.js"></script>
 	<script>wow = new WOW({}).init();</script>
